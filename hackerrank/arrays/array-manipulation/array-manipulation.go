@@ -11,7 +11,31 @@ import (
 
 // Complete the arrayManipulation function below.
 func arrayManipulation(n int32, queries [][]int32) int64 {
+	arr := make([]int64, n)
+	for _, query := range queries {
+		a, b, k := query[0], query[1], query[2]
+		arr[a-1]+=int64(k)
+		if b < n {
+			arr[b]-=int64(k)
+		}
+	}
+	for i := range arr {
+		if i == 0 {
+			continue
+		}
+		arr[i]=arr[i-1]+arr[i]
+	}
+	return max(arr)
+}
 
+func max(arr []int64) int64 {
+	max := int64(0)
+	for _, elem := range arr {
+		if elem > max {
+			max = elem
+		}
+	}
+	return max
 }
 
 func main() {
